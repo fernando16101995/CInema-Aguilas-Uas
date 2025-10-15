@@ -1,0 +1,28 @@
+/* Básicos */
+:root{
+    --accent: #f1c40f;
+    --bg: #00103d;
+    --card-bg: rgba(255,255,255,0.03);
+}
+body{font-family: 'Poppins', sans-serif; background: var(--bg); color: #fff; margin:0}
+.container{max-width:1100px; margin:0 auto; padding:2rem}
+.catalog-header{padding:2rem 0; text-align:center}
+.catalog-header h1{color:var(--accent); margin:0 0 .25rem}
+.catalog-grid{display:grid; grid-template-columns: repeat(auto-fill,minmax(220px,1fr)); gap:1.25rem}
+
+.card{background:var(--card-bg); border-radius:10px; overflow:hidden; box-shadow:0 6px 18px rgba(0,0,0,0.5); display:flex; flex-direction:column}
+.card-thumb{height:320px; background-size:cover; background-position:center}
+.card-body{padding:1rem; flex:1; display:flex; flex-direction:column}
+.card-title{color:var(--accent); margin:0 0 .25rem}
+.card-meta{font-size:.85rem; color:#d1d1d1; margin-bottom:.5rem}
+.card-desc{flex:1; font-size:.95rem; color:#e6e6e6}
+.card-actions{margin-top:1rem; display:flex; gap:.5rem}
+
+/* Botones (re-utilizables) */
+.btn{display:inline-block; padding:.6rem 1rem; border-radius:30px; text-decoration:none; font-weight:600}
+.btn-primary{background:var(--accent); color:var(--bg)}
+.btn-secondary{background:transparent; color:var(--accent); border:2px solid var(--accent)}
+
+@media (max-width:600px){
+    .card-thumb{height:220px}
+}

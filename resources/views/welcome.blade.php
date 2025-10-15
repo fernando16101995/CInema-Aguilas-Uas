@@ -24,8 +24,8 @@
                 <h2 class="subtitle">Tu cine en casa, fácil y rápido</h2>
                 <h1 class="title">Disfruta de tus películas y series favoritas en cualquier dispositivo</h1>
                 <div class="hero-buttons">
-                    <a href="#" class="btn btn-primary">Comenzar ahora</a>
-                    <a href="#" class="btn btn-secondary">Ver catálogo</a>
+                    <a href="{{ route('login') }}" class="btn btn-primary">Comenzar ahora</a>
+                    <a href="{{ route('catalog') }}" class="btn btn-secondary">Ver catálogo</a>
                 </div>
             </div>
         </section>
