@@ -1,3 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+.register-container, .register-container * {
+    font-family: 'Roboto', Arial, sans-serif !important;
+}
 
 body {
     background-image: url('/images/cinema-uas-bg.jpg'), url('/images/logo cinema uas.jpg');
