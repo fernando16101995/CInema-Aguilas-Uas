@@ -1,0 +1,79 @@
+
+
+body {
+    background-image: url('/images/cinema-uas-bg.jpg'), url('/images/logo cinema uas.jpg');
+    background-size: cover;
+    background-position: center, center;
+    background-repeat: no-repeat, no-repeat;
+    background-color: #00103d;
+    color: white;
+}
+
+.register-container {
+    max-width: 400px;
+    margin: 100px auto 40px auto;
+    background: rgb(104, 101, 101, 0.6);
+    border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(85, 83, 83, 0.2);
+    padding: 2.5rem 2rem;
+    backdrop-filter: blur(4px);
+}
+
+.register-title {
+    color: #ffe600;
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.register-label {
+    color: #ffe600;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.register-input {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    border: none;
+    background: rgba(255,255,255,0.8);
+    margin-bottom: 1rem;
+    outline: none;
+    transition: box-shadow 0.2s;
+}
+
+.register-input:focus {
+    box-shadow: 0 0 0 2px #ffe600;
+}
+
+.register-link {
+    color: #ffe600;
+    font-size: 0.95rem;
+    text-decoration: underline;
+    margin-bottom: 1rem;
+    display: inline-block;
+}
+
+.register-btn {
+    width: 100%;
+    background: #ffe600;
+    color: #0a1437;
+    font-weight: bold;
+    padding: 0.6rem 0;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.register-btn:hover {
+    background: #ffe600cc;
+}
+
+.text-error {
+    color: #ff4d4f;
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+}
