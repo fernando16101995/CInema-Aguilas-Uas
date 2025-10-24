@@ -7,10 +7,17 @@
     <link rel="stylesheet" href="{{ asset('css/catalog.css') }}">
 </head>
 <body>
+
     <header class="catalog-header">
-        <div class="container">
-            <h1>Catálogo de películas</h1>
-            <p>Explora nuestra selección</p>
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <h1>Catálogo de películas</h1>
+                <p>Explora nuestra selección</p>
+            </div>
+            <div>
+                <a href="/login" class="btn btn-primary" style="margin-right: 10px;">Iniciar Sesión</a>
+                <a href="/register" class="btn btn-secondary">Registrarse</a>
+            </div>
         </div>
     </header>
 
