@@ -9,7 +9,7 @@
 <body>
     <header>
         <div class="navbar">
-            <h1 class="logo">Cinema Águilas Uas</h1>
+            <div class="logo">Cinemas<span>AguilasUas</span></div>
             <div class="nav-buttons">
                 <a href="{{ route('login') }}" class="btn btn-primary">Iniciar sesión</a>
                 <a href="{{ route('register') }}" class="btn btn-secondary">Registrarse</a>

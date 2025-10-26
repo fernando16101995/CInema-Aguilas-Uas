@@ -3,6 +3,17 @@
     --accent: #f1c40f;
     --bg: #00103d;
     --card-bg: rgba(255,255,255,0.03);
+    --blanco: #fff;
+    --dorado: #f1c40f;
+}
+.logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--blanco);
+}
+
+.logo span {
+    color: var(--dorado);
 }
 body{font-family: 'Poppins', sans-serif; background: var(--bg); color: #fff; margin:0}
 .container{max-width:1100px; margin:0 auto; padding:2rem}

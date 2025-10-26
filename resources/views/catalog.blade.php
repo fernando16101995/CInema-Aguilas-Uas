@@ -9,6 +9,7 @@
 <body>
 
     <header class="catalog-header">
+         <div class="logo">Cinemas<span>AguilasUas</span></div>
         <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
             <div>
                 <h1>Catálogo de películas</h1>
