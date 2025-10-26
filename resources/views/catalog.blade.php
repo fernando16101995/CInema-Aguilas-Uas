@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="{{ asset('css/catalog.css') }}">
 </head>
 <body>
+
     <header class="catalog-header">
         <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
             <div>
