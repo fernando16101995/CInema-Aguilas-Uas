@@ -2,7 +2,7 @@
 body {
     margin: 0;
     font-family: 'Poppins', sans-serif;
-    background-image:url('/images/logo cinema uas.jpg');
+    background-image: url('/images/logo cinema uas.jpg');
     background-size: cover, contain;
     background-position: center, center;
     background-repeat: no-repeat, no-repeat;
