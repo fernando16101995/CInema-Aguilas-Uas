@@ -1,3 +1,7 @@
+@import "./peliculas-admin-modal.css";
+@import "./admin.css";
+
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
