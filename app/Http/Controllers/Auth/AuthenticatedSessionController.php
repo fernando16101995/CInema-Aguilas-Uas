@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
@@ -24,11 +25,23 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-        $request->authenticate();
+      $request->authenticate();
 
-        $request->session()->regenerate();
+    $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+    
+
+    $user = auth()->user();
+
+    // 1. Si el rol es 'admin'...
+    if ($user->role == 'admin') {
+        // ...lo mandamos a la ruta 'admin.dashboard'
+        return redirect()->route('admin.dashboard');
+    }
+
+    // 2. Si es un usuario normal...
+    // ...lo mandamos a la URL '/dashboard'
+    return redirect()->intended('/dashboard');
     }
 
     /**

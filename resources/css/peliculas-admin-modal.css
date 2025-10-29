@@ -1,0 +1,53 @@
+/*
+ * --- ESTILOS DE COMPONENTES ÚNICOS PARA EL MODAL (TEMA CLARO) ---
+ */
+
+/* 1. Estilos del Formulario y Botones de ACCIÓN */
+.admin-btn-primary { background-color: #3b82f6; color: white; padding: 10px 15px; border-radius: 6px; text-decoration: none; font-weight: 600; }
+.admin-btn-secondary { background-color: #e5e7eb; color: #1f2937; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-size: 0.9rem; border: none; cursor: pointer; font-family: inherit; }
+.admin-btn-danger { background-color: #ef4444; color: white; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-size: 0.9rem; border: none; cursor: pointer; font-family: inherit; }
+.card-actions-admin { margin-top: 1rem; display: flex; gap: 10px; align-items: center; }
+
+/* --- 2. ESTILOS MODAL RESPONSIVOS --- */
+/* --- FIX CONTRASTE FORZADO --- */
+#edit-modal-container * {
+  color: #1f2937 !important;
+  background-color: white !important;
+  -webkit-text-fill-color: #1f2937 !important;
+}
+
+#modal-content {
+    background: white; /* Fondo del modal: Blanco */
+    padding: 20px; border-radius: 8px; max-width: 600px; width: 90%; max-height: 90vh; overflow-y: auto; position: relative; 
+    color: #1f2937; /* Texto general del modal: Negro */
+}
+#modal-content .close-button { 
+    position: absolute; top: 10px; right: 15px; background: none; color: #1f2937; border: none; font-size: 1.8rem; cursor: pointer; z-index: 1001; 
+}
+
+/* 3. Estilos para los campos del formulario dentro del modal */
+.form-group { margin-bottom: 1.5rem; }
+.form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; color: #1f2937; /* Etiquetas: Negro */ }
+
+/* --- REGLA DE CONTRASTE DEFINITIVA (TEMA CLARO) --- */
+.form-control { 
+    width: 100%; 
+    padding: 0.75rem; 
+    border-radius: 6px; 
+    border: 1px solid #d1d5db; 
+    
+    /* FONDO DEL INPUT: Blanco */
+    background-color: white; 
+    
+    /* COLOR DEL TEXTO: Forzado a negro (el color de contraste) */
+    color: #000000 !important; 
+    
+    /* Solución para navegadores Chromium */
+    -webkit-text-fill-color: #1f2937 !important; 
+    
+    box-sizing: border-box; 
+}
+/* --------------------------------------------- */
+
+.btn-success { background-color: #10b981; color: white; padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer; transition: background 0.2s; }
+.btn-cancel { background-color: #4b5563; color: white; padding: 10px 20px; border-radius: 6px; text-decoration: none; margin-left: 10px; display: inline-block; border: none; cursor: pointer; }

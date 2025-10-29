@@ -45,12 +45,7 @@
                 </div>
 
                 {{-- Entrar como administrador --}}
-                <div style="margin-bottom: 1rem;">
-                    <label for="as_admin" style="color: #ffe600; font-size: 0.95rem;">
-                        <input id="as_admin" type="checkbox" name="as_admin" style="margin-right: 0.5em;">
-                        Entrar como administrador
-                    </label>
-                </div>
+              
 
                 {{-- Recuperar contraseña --}}
                 @if (Route::has('password.request'))
