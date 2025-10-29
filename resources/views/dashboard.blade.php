@@ -33,22 +33,23 @@
 
     <main class="content">
         <!-- Lo Nuevo -->
-    <section class="movie-section" id="lo-nuevo">
+        <section class="movie-section" id="lo-nuevo">
             <h2 class="section-title">Lo Nuevo</h2>
             <div class="movie-carousel">
                 <div class="movie-scroll">
-                    @for ($i = 1; $i <= 8; $i++)
+                    @foreach ($peliculas as $pelicula)
                         <div class="movie-card">
-                            <img src="https://picsum.photos/300/450?random=nuevo{{ $i }}" alt="Película Nueva {{ $i }}">
+                            <img src="{{ $pelicula->poster_url }}" alt="{{ $pelicula->title }}">
                             <div class="movie-info">
-                                <h3>Nueva Película {{ $i }}</h3>
+                                <h3>{{ $pelicula->title }}</h3>
+                                <p style="font-size:0.9rem; margin-bottom:0.5rem;">{{ $pelicula->genre }} · {{ $pelicula->duration_minutes }} min</p>
                                 <div class="movie-actions">
-                                    <button class="btn-play">▶ Reproducir</button>
+                                    <a href="{{ $pelicula->video_url }}" class="btn-play" target="_blank">▶ Reproducir</a>
                                     <button class="btn-info">+ Mi Lista</button>
                                 </div>
                             </div>
                         </div>
-                    @endfor
+                    @endforeach
                 </div>
             </div>
         </section>
