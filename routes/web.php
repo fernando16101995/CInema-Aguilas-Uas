@@ -12,7 +12,8 @@ Route::get('/', function () {
 
 // Ruta del dashboard de USUARIO NORMAL
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $peliculas = \App\Models\Peliculas::all();
+    return view('dashboard', compact('peliculas'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/catalog', function () {
