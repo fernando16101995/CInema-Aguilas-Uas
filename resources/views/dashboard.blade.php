@@ -32,133 +32,47 @@
 
 
     <main class="content">
-        <!-- Lo Nuevo -->
-        <section class="movie-section" id="lo-nuevo">
-            <h2 class="section-title">Lo Nuevo</h2>
-            <div class="movie-carousel">
-                <div class="movie-scroll">
-                    @foreach ($peliculas as $pelicula)
-                        <div class="movie-card">
-                            <a href="#" onclick="openMovieTab('{{ addslashes(json_encode($pelicula)) }}')">
-                                <img src="{{ $pelicula->poster_url }}" alt="{{ $pelicula->title }}">
-                            </a>
-                            <div class="movie-info">
-                                <h3>{{ $pelicula->title }}</h3>
-                                <p style="font-size:0.9rem; margin-bottom:0.5rem;">{{ $pelicula->genre }} · {{ $pelicula->duration_minutes }} min</p>
-                                <div class="movie-actions">
-                                    <a href="{{ $pelicula->video_url }}" class="btn-play" target="_blank">▶ Reproducir</a>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-        </section>
+        <!-- Secciones dinámicas por género -->
+        @php
+            // Obtener todos los géneros únicos, aunque estén en campos con múltiples géneros separados por coma
+            $allGenres = collect();
+            foreach ($peliculas as $pelicula) {
+                $genres = array_map('trim', explode(',', $pelicula->genre));
+                foreach ($genres as $g) {
+                    $allGenres->push($g);
+                }
+            }
+            $uniqueGenres = $allGenres->unique()->sort();
+        @endphp
 
-        <!-- Acción -->
-    <section class="movie-section" id="accion">
-            <h2 class="section-title">Acción</h2>
-            <div class="movie-carousel">
-                <div class="movie-scroll">
-                    @for ($i = 1; $i <= 8; $i++)
-                        <div class="movie-card">
-                            <img src="https://picsum.photos/300/450?random=accion{{ $i }}" alt="Película de Acción {{ $i }}">
-                            <div class="movie-info">
-                                <h3>Acción Extrema {{ $i }}</h3>
-                                <div class="movie-actions">
-                                    <button class="btn-play">▶ Reproducir</button>
-                                    <button class="btn-info">+ Mi Lista</button>
+        @foreach ($uniqueGenres as $genero)
+            <section class="movie-section" id="{{ Str::slug($genero) }}">
+                <h2 class="section-title">{{ $genero }}</h2>
+                <div class="movie-carousel">
+                    <div class="movie-scroll">
+                        @foreach ($peliculas as $pelicula)
+                            @php
+                                $genres = array_map('trim', explode(',', $pelicula->genre));
+                            @endphp
+                            @if (in_array($genero, $genres))
+                                <div class="movie-card">
+                                    <a href="#" onclick="openMovieTab('{{ addslashes(json_encode($pelicula)) }}')">
+                                        <img src="{{ $pelicula->poster_url }}" alt="{{ $pelicula->title }}">
+                                    </a>
+                                    <div class="movie-info">
+                                        <h3>{{ $pelicula->title }}</h3>
+                                        <p style="font-size:0.9rem; margin-bottom:0.5rem;">{{ $pelicula->genre }} · {{ $pelicula->duration_minutes }} min</p>
+                                        <div class="movie-actions">
+                                            <a href="{{ $pelicula->video_url }}" class="btn-play" target="_blank">▶ Reproducir</a>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    @endfor
+                            @endif
+                        @endforeach
+                    </div>
                 </div>
-            </div>
-        </section>
-
-        <!-- Terror -->
-    <section class="movie-section" id="terror">
-            <h2 class="section-title">Terror</h2>
-            <div class="movie-carousel">
-                <div class="movie-scroll">
-                    @for ($i = 1; $i <= 8; $i++)
-                        <div class="movie-card">
-                            <img src="https://picsum.photos/300/450?random=terror{{ $i }}" alt="Película de Terror {{ $i }}">
-                            <div class="movie-info">
-                                <h3>Pesadilla {{ $i }}</h3>
-                                <div class="movie-actions">
-                                    <button class="btn-play">▶ Reproducir</button>
-                                    <button class="btn-info">+ Mi Lista</button>
-                                </div>
-                            </div>
-                        </div>
-                    @endfor
-                </div>
-            </div>
-        </section>
-
-        <!-- Comedia -->
-    <section class="movie-section" id="comedia">
-            <h2 class="section-title">Comedia</h2>
-            <div class="movie-carousel">
-                <div class="movie-scroll">
-                    @for ($i = 1; $i <= 8; $i++)
-                        <div class="movie-card">
-                            <img src="https://picsum.photos/300/450?random=comedia{{ $i }}" alt="Película de Comedia {{ $i }}">
-                            <div class="movie-info">
-                                <h3>Risas Garantizadas {{ $i }}</h3>
-                                <div class="movie-actions">
-                                    <button class="btn-play">▶ Reproducir</button>
-                                    <button class="btn-info">+ Mi Lista</button>
-                                </div>
-                            </div>
-                        </div>
-                    @endfor
-                </div>
-            </div>
-        </section>
-
-        <!-- Drama -->
-    <section class="movie-section" id="drama">
-            <h2 class="section-title">Drama</h2>
-            <div class="movie-carousel">
-                <div class="movie-scroll">
-                    @for ($i = 1; $i <= 8; $i++)
-                        <div class="movie-card">
-                            <img src="https://picsum.photos/300/450?random=drama{{ $i }}" alt="Película de Drama {{ $i }}">
-                            <div class="movie-info">
-                                <h3>Drama Intenso {{ $i }}</h3>
-                                <div class="movie-actions">
-                                    <button class="btn-play">▶ Reproducir</button>
-                                    <button class="btn-info">+ Mi Lista</button>
-                                </div>
-                            </div>
-                        </div>
-                    @endfor
-                </div>
-            </div>
-        </section>
-
-        <!-- Ciencia Ficción -->
-    <section class="movie-section" id="scifi">
-            <h2 class="section-title">Ciencia Ficción</h2>
-            <div class="movie-carousel">
-                <div class="movie-scroll">
-                    @for ($i = 1; $i <= 8; $i++)
-                        <div class="movie-card">
-                            <img src="https://picsum.photos/300/450?random=scifi{{ $i }}" alt="Película de Ciencia Ficción {{ $i }}">
-                            <div class="movie-info">
-                                <h3>Futuro Digital {{ $i }}</h3>
-                                <div class="movie-actions">
-                                    <button class="btn-play">▶ Reproducir</button>
-                                    <button class="btn-info">+ Mi Lista</button>
-                                </div>
-                            </div>
-                        </div>
-                    @endfor
-                </div>
-            </div>
-        </section>
+            </section>
+        @endforeach
     </main>
 
     <footer>
