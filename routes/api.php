@@ -2,6 +2,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthApiController;
+use App\Http\Controllers\Api\PeliculasApiController;
 use App\Models\User;
 
 Route::post('/register', [AuthApiController::class, 'register']);
@@ -28,5 +29,8 @@ Route::get('/users/{id}', function ($id) {
     return response()->json(['error' => 'Usuario no encontrado'], 404);
 });
 
+// Endpoints para películas
+Route::get('/peliculas', [PeliculasApiController::class, 'index']); // Listar todas o filtrar por género
+Route::get('/peliculas/{id}', [PeliculasApiController::class, 'show']); // Ver detalles por ID
 
     
