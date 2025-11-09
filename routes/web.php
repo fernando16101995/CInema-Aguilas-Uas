@@ -91,3 +91,11 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::delete('users/{user}', [UserController::class, 'destroy'])->name('users.destroy'); 
     Route::patch('users/{user}/toggle-admin', [UserController::class, 'toggleAdmin'])->name('users.toggleAdmin');
 });
+
+Route::get('/test-mongo', function () {
+    $profile = new \App\Models\Profile();
+    $profile->user_id = 1;
+    $profile->nombre = 'Prueba';
+    $profile->save();
+    return 'Perfil creado en MongoDB';
+});
