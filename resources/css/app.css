@@ -1,6 +1,6 @@
 @import "./peliculas-admin-modal.css";
 @import "./admin.css";
-
+@import "./profiles.css";
 
 @tailwind base;
 @tailwind components;
