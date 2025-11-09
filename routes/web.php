@@ -50,7 +50,8 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified', 'profile.selected'])->name('dashboard');
 
 Route::get('/catalog', function () {
-    return view('catalog');
+    $peliculas = Peliculas::all();
+    return view('catalog', compact('peliculas'));
 })->name('catalog');
 
 Route::middleware('auth')->group(function () {

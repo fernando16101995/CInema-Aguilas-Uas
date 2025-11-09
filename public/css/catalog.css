@@ -22,7 +22,27 @@ body{font-family: 'Poppins', sans-serif; background: var(--bg); color: #fff; mar
 .catalog-grid{display:grid; grid-template-columns: repeat(auto-fill,minmax(220px,1fr)); gap:1.25rem}
 
 .card{background:var(--card-bg); border-radius:10px; overflow:hidden; box-shadow:0 6px 18px rgba(0,0,0,0.5); display:flex; flex-direction:column}
-.card-thumb{height:320px; background-size:cover; background-position:center}
+.card-thumb {
+    height: 320px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--card-bg);
+    overflow: hidden;
+}
+.card-thumb img.card-img {
+    width: 200px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+    transition: transform 0.2s;
+    display: block;
+    margin: 0 auto;
+}
+.card-thumb img.card-img:hover {
+    transform: scale(1.05);
+}
 .card-body{padding:1rem; flex:1; display:flex; flex-direction:column}
 .card-title{color:var(--accent); margin:0 0 .25rem}
 .card-meta{font-size:.85rem; color:#d1d1d1; margin-bottom:.5rem}
@@ -35,5 +55,9 @@ body{font-family: 'Poppins', sans-serif; background: var(--bg); color: #fff; mar
 .btn-secondary{background:transparent; color:var(--accent); border:2px solid var(--accent)}
 
 @media (max-width:600px){
-    .card-thumb{height:220px}
+    .card-thumb{height:180px}
+    .card-thumb img.card-img {
+        width: 110px;
+        height: 160px;
+    }
 }

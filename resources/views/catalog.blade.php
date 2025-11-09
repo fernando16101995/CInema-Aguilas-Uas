@@ -23,20 +23,17 @@
     </header>
 
     <main class="container catalog-grid">
-        @for ($i = 1; $i <= 12; $i++)
+        @foreach ($peliculas as $pelicula)
             <article class="card">
-                <div class="card-thumb" style="background-image: url('/images/placeholder-300x450.png')"></div>
+                <div class="card-thumb">
+                    <img src="{{ $pelicula->poster_url ?? '/images/placeholder-300x450.png' }}" alt="Poster de {{ $pelicula->title ?? 'Sin título' }}" class="card-img" />
+                </div>
                 <div class="card-body">
-                    <h3 class="card-title">Película Ejemplo #{{ $i }}</h3>
-                    <p class="card-meta">2024 · Acción · 2h 10m</p>
-                    <p class="card-desc">Una breve descripción de la película. Emocionante, épica y para toda la familia.</p>
-                    <div class="card-actions">
-                        <a href="#" class="btn btn-primary">Ver detalles</a>
-                        <a href="#" class="btn btn-secondary">Ver tráiler</a>
-                    </div>
+                    <h3 class="card-title">{{ $pelicula->title ?? 'Sin título' }}</h3>
+                    <p class="card-desc">{{ $pelicula->description ?? 'Sin descripción.' }}</p>
                 </div>
             </article>
-        @endfor
+        @endforeach
     </main>
 </body>
 </html>
