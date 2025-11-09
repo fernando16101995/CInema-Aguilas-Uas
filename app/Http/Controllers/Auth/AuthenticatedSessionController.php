@@ -40,8 +40,8 @@ class AuthenticatedSessionController extends Controller
     }
 
     // 2. Si es un usuario normal...
-    // ...lo mandamos a la URL '/dashboard'
-    return redirect()->intended('/dashboard');
+    // ...lo mandamos a la URL '/profiles'
+   return redirect()->route('profiles.index');
     }
 
     /**

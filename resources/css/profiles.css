@@ -1,0 +1,141 @@
+/*
+ * --- ESTILOS PARA LA SELECCIÓN DE PERFILES ---
+ */
+
+/* Contenedor principal de la lista de perfiles */
+
+.profile-container { 
+    text-align: center; 
+  
+    display: grid;
+    place-items: center;
+    min-height: 100vh;
+}
+.profile-grid { 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    gap: 2vw; 
+}
+.profile-card { 
+    text-align: center; 
+    cursor: pointer; 
+}
+.profile-card img { 
+    width: 150px; 
+    height: 150px; 
+    border-radius: 8px; 
+    border: 4px solid transparent; 
+    transition: border-color 0.3s; 
+}
+.profile-card:hover img { 
+    border-color: white; 
+}
+.profile-card .profile-name { 
+    margin-top: 10px; 
+    font-size: 1.2rem; 
+    color: #9ca3af; 
+    transition: color 0.3s; 
+}
+.profile-card:hover .profile-name { 
+    color: white; 
+}
+.add-profile-box {
+    width: 150px;
+    height: 150px;
+    border-radius: 8px;
+    background-color: #374151; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    font-size: 5rem; 
+    color: #9ca3af; 
+    line-height: 0;
+    
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Efecto hover sobre la tarjeta */
+.add-profile:hover .add-profile-box {
+    background-color: #4b5563; 
+    color: white; 
+}
+
+
+
+.form-container { 
+    max-width: 500px; 
+    margin: 50px auto; 
+    background: #1f2937; 
+    padding: 30px; 
+    border-radius: 8px; 
+}
+.form-group { 
+    margin-bottom: 20px; 
+}
+.form-group label { 
+    display: block; 
+    margin-bottom: 5px; 
+    font-weight: 600; 
+}
+.form-group input[type="text"], 
+.form-group input[type="url"] { 
+    width: 100%;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #4b5563;
+    background: #374151;
+    color: white; 
+}
+.form-group input[type="checkbox"] { 
+    margin-right: 10px; 
+}
+.btn-primary { 
+    background-color: #e11d48; 
+    color: white; 
+    padding: 10px 20px; 
+    border: none; 
+    border-radius: 4px; 
+    cursor: pointer; 
+}
+
+
+/* --- ESTILOS PARA EL SELECTOR DE AVATAR --- */
+
+.avatar-grid {
+    display: flex;
+    flex-wrap: wrap; /* Para que se ajusten si son muchos */
+    gap: 15px; /* Espacio entre avatares */
+    margin-top: 10px;
+}
+
+.avatar-option {
+    cursor: pointer;
+    position: relative;
+}
+
+
+.avatar-option input[type="radio"] {
+    display: none;
+}
+
+/* 2. Estilo de la imagen del avatar */
+.avatar-option img {
+    width: 100px; 
+    height: 100px;
+    border-radius: 6px;
+    border: 3px solid transparent; 
+    transition: border-color 0.2s;
+}
+
+/* 3. Estilo para el avatar que está SELECCIONADO */
+.avatar-option input[type="radio"]:checked + img {
+    border-color: white; 
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+}
+
+/* 4. Efecto hover  */
+.avatar-option:hover img {
+    border-color: #9ca3af; 
+}

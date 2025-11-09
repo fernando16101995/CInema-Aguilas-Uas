@@ -5,6 +5,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController; 
 use App\Http\Controllers\Admin\PeliculasController; 
 use App\Http\Controllers\Admin\UserController; 
+use App\Http\Controllers\NetflixProfileController;
+use App\Http\Controllers\PlaybackController;
+use App\Models\HistorialVista;
+use App\Models\Peliculas;
 
 Route::get('/', function () {
     return view('welcome');
@@ -12,9 +16,38 @@ Route::get('/', function () {
 
 // Ruta del dashboard de USUARIO NORMAL
 Route::get('/dashboard', function () {
-    $peliculas = \App\Models\Peliculas::all();
-    return view('dashboard', compact('peliculas'));
-})->middleware(['auth', 'verified'])->name('dashboard');
+    
+    // --- 1. LÓGICA DEL CATÁLOGO GENERAL 
+    $peliculas = Peliculas::all(); // Obtiene todas las películas de Postgres
+
+    // --- 2. LÓGICA DE "SEGUIR VIENDO" 
+    $perfilId = session('active_profile_id'); // Obtiene el perfil de la sesión
+    
+    $peliculasSeguirViendo = collect(); // Crea una lista vacía por si no hay historial
+
+    if ($perfilId) {
+        // Busca en MongoDB el historial de ESE perfil
+        $historial = HistorialVista::where('perfil_id', $perfilId)
+                                    ->orderBy('updated_at', 'desc')
+                                    ->take(10)
+                                    ->pluck('pelicula_id'); // IDs de Postgres
+        
+        if ($historial->count() > 0) {
+            // Busca las películas en Postgres y las reordena
+            $peliculasSeguirViendo = Peliculas::findMany($historial)
+                                          ->sortBy(function ($pelicula) use ($historial) {
+                                              return array_search($pelicula->id, $historial->toArray());
+                                          });
+        }
+    }
+    
+    // --- 3. DEVUELVE LA VISTA 
+    return view('dashboard', [
+        'peliculas' => $peliculas,
+        'peliculasSeguirViendo' => $peliculasSeguirViendo
+    ]);
+
+})->middleware(['auth', 'verified', 'profile.selected'])->name('dashboard');
 
 Route::get('/catalog', function () {
     return view('catalog');
@@ -24,9 +57,22 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    //-----------------------------------------------------------------------------------------------
+    // Muestra la pantalla "¿Quién está viendo?"
+    Route::get('/profiles', [NetflixProfileController::class, 'index'])->name('profiles.index');
+
+    // Muestra el formulario para crear un nuevo perfil
+    Route::get('/profiles/create', [NetflixProfileController::class, 'create'])->name('profiles.create');
+
+    // Guarda el nuevo perfil
+    Route::post('/profiles', [NetflixProfileController::class, 'store'])->name('profiles.store');
+    // seleccionar perfil
+    Route::get('/profiles/{profile}/select', [NetflixProfileController::class, 'select'])->name('profiles.select');
+    // Ruta para registrar la vista (usada por JavaScript)
+    Route::post('/playback/log-view', [PlaybackController::class, 'registrarVista'])->name('playback.log');
 });
 
-// Carga rutas de login, register, logout, etc.
+// Carga rutas de login, register, logout
 require __DIR__.'/auth.php';
 
 
@@ -44,4 +90,12 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('users', [UserController::class, 'index'])->name('users.index'); 
     Route::delete('users/{user}', [UserController::class, 'destroy'])->name('users.destroy'); 
     Route::patch('users/{user}/toggle-admin', [UserController::class, 'toggleAdmin'])->name('users.toggleAdmin');
+});
+
+Route::get('/test-mongo', function () {
+    $profile = new \App\Models\Profile();
+    $profile->user_id = 1;
+    $profile->nombre = 'Prueba';
+    $profile->save();
+    return 'Perfil creado en MongoDB';
 });

@@ -44,7 +44,7 @@
                     </label>
                 </div>
 
-                {{-- Entrar como administrador --}}
+              
               
 
                 {{-- Recuperar contraseña --}}
