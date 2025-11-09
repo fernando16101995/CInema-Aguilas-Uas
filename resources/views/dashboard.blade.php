@@ -4,11 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cinemas Aguilas Uas - Home</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
 </head>
 <body>
 
     <header class="header">
+    
         <div class="logo">Cinemas<span>AguilasUas</span></div>
         <nav>
             <ul class="menu">
@@ -45,7 +47,38 @@
             $uniqueGenres = $allGenres->unique()->sort();
         @endphp
 
-        @foreach ($uniqueGenres as $genero)
+    
+        @if ($peliculasSeguirViendo->count() > 0)
+            <section class="movie-section" id="seguir-viendo">
+                <h2 class="section-title">Seguir Viendo</h2>
+                <div class="movie-carousel">
+                    <div class="movie-scroll">
+                        
+                        @foreach ($peliculasSeguirViendo as $pelicula)
+                            <div class="movie-card">
+                                <a href="#" onclick="openMovieTab('{{ addslashes(json_encode($pelicula)) }}')">
+                                    <img src="{{ $pelicula->poster_url }}" alt="{{ $pelicula->title }}">
+                                </a>
+                                <div class="movie-info">
+                                    <h3>{{ $pelicula->title }}</h3>
+                                    <p style="font-size:0.9rem; margin-bottom:0.5rem;">{{ $pelicula->genre }} · {{ $pelicula->duration_minutes }} min</p>
+                                    <div class="movie-actions">
+                                      <a href="javascript:void(0)" 
+                                               class="btn-play" 
+                                               onclick="logView({{ $pelicula->id }}, '{{ $pelicula->video_url }}')">
+                                               ▶ Reproducir
+                                            </a>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                        
+                    </div>
+                </div>
+            </section>
+        @endif
+
+            @foreach ($uniqueGenres as $genero)
             <section class="movie-section" id="{{ Str::slug($genero) }}">
                 <h2 class="section-title">{{ $genero }}</h2>
                 <div class="movie-carousel">
@@ -63,7 +96,11 @@
                                         <h3>{{ $pelicula->title }}</h3>
                                         <p style="font-size:0.9rem; margin-bottom:0.5rem;">{{ $pelicula->genre }} · {{ $pelicula->duration_minutes }} min</p>
                                         <div class="movie-actions">
-                                            <a href="{{ $pelicula->video_url }}" class="btn-play" target="_blank">▶ Reproducir</a>
+                                            <a href="javascript:void(0)" 
+                                           class="btn-play" 
+                                           onclick="logView({{ $pelicula->id }}, '{{ $pelicula->video_url }}')">
+                                           ▶ Reproducir
+                                        </a>
                                         </div>
                                     </div>
                                 </div>
@@ -72,7 +109,7 @@
                     </div>
                 </div>
             </section>
-        @endforeach
+           @endforeach
     </main>
 
     <footer>
@@ -83,6 +120,7 @@
     function openMovieTab(peliculaJson) {
         const pelicula = JSON.parse(peliculaJson);
         const win = window.open('', '_blank');
+       
         win.document.write(`
             <html lang="es">
             <head>
@@ -101,6 +139,18 @@
                     .btn-back { background: #4b5563; color: #fff; padding: 0.7rem 1.5rem; border-radius: 8px; font-weight: bold; text-decoration: none; font-size: 1.1rem; display: inline-block; margin-top: 1.5rem; border: none; cursor: pointer; }
                     .btn-back:hover { background: #FFD700; color: #001F3F; }
                 </style>
+                <script>
+                        function clickReproducir() {
+                            // 1. Llama a la función 'logView' de la ventana "madre" (el dashboard)
+                            if (window.opener && window.opener.logView) {
+                                // Llama a la función, pero pasa 'null' como URL
+                                window.opener.logView(${pelicula.id}, null); 
+                            }
+                            
+                            // 2. Redirige la pestaña actual al video
+                            window.location.href = "${pelicula.video_url}";
+                        }
+                    <\/script>
             </head>
             <body>
                 <div class="container">
@@ -108,13 +158,68 @@
                     <h1>${pelicula.title}</h1>
                     <div class="meta">${pelicula.genre} · ${pelicula.duration_minutes} min</div>
                     <div class="desc">${pelicula.description}</div>
-                    <a href="${pelicula.video_url}" class="btn-play" target="_blank">▶ Reproducir</a>
+                 
+                   <a href="javascript:void(0)" class="btn-play" onclick="clickReproducir()">▶ Reproducir</a>
+                     
                     <button class="btn-back" onclick="window.close()">Volver al dashboard</button>
                 </div>
             </body>
-            </html>
+            </html>+
         `);
         win.document.close();
+    }
+    </script>
+
+    <script>
+    function logView(peliculaId, videoUrl) {
+        
+        // 1. Abre la nueva pestaña
+       
+        window.open(videoUrl, '_blank');
+
+        // 2. Busca el token
+        const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+
+        // 3. Si no hay token, no podemos guardar, pero la pestaña ya se abrió
+        if (!token) {
+            console.error('¡Error de CSRF! No se encontró la meta-etiqueta.');
+            return false; // Detiene el script
+        }
+        
+        const data = { pelicula_id: peliculaId };
+
+        // 4. Envía la petición (Fetch) en segundo plano
+     
+        fetch("{{ route('playback.log') }}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': token
+            },
+            body: JSON.stringify(data),
+            keepalive: true 
+        })
+        .then(response => {
+          
+            if (!response.ok) {
+                console.error('Error al guardar historial: ' + response.status);
+                throw new Error('Fallo del servidor: ' + response.status);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                console.log('Historial guardado para pelicula ID:', peliculaId);
+            } else {
+                console.error('Error de lógica al guardar historial:', data.error);
+            }
+        })
+        .catch(error => {
+            console.error('Error de red al guardar historial:', error);
+        });
+        
+        // 5. Devolvemos 'false' para PREVENIR que el <a>
+        return false;
     }
     </script>
 
