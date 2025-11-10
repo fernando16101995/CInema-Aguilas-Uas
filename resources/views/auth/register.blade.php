@@ -48,7 +48,9 @@
                 @enderror
 
                 {{-- Link al login --}}
-                <a href="{{ route('login') }}" class="register-link">¿Ya tienes cuenta?</a>
+                <div style="margin-top: 1rem;">
+                    <a href="{{ route('login') }}" class="register-link" style="color: #ffe600; text-decoration: underline; font-size: 1rem; font-weight: 500;">¿Ya tienes cuenta? Inicia sesión aquí</a>
+                </div>
 
                 {{-- Botón de envío --}}
                 <button type="submit" class="register-btn">Registrarse</button>
