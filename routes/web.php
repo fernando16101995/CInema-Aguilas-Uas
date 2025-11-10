@@ -7,8 +7,10 @@ use App\Http\Controllers\Admin\PeliculasController;
 use App\Http\Controllers\Admin\UserController; 
 use App\Http\Controllers\NetflixProfileController;
 use App\Http\Controllers\PlaybackController;
+use App\Http\Middleware\CheckSubscription;
 use App\Models\HistorialVista;
 use App\Models\Peliculas;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -47,7 +49,12 @@ Route::get('/dashboard', function () {
         'peliculasSeguirViendo' => $peliculasSeguirViendo
     ]);
 
-})->middleware(['auth', 'verified', 'profile.selected'])->name('dashboard');
+})->middleware([
+    'auth',
+    'verified',
+    'profile.selected',
+    CheckSubscription::class
+])->name('dashboard');
 
 Route::get('/catalog', function () {
     $peliculas = Peliculas::all();
@@ -76,6 +83,15 @@ Route::middleware('auth')->group(function () {
 // Carga rutas de login, register, logout
 require __DIR__.'/auth.php';
 
+
+// Rutas para Stripe
+use App\Http\Controllers\StripeController;
+Route::middleware(['auth', 'profile.selected'])->group(function () {
+    Route::get('/stripe', [StripeController::class, 'showForm'])->name('stripe.form');
+    Route::post('/stripe/pay', [StripeController::class, 'processPayment'])->name('stripe.pay');
+    Route::get('/stripe/success', [StripeController::class, 'success'])->name('stripe.success');
+    Route::get('/stripe/cancel', [StripeController::class, 'cancel'])->name('stripe.cancel');
+});
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     

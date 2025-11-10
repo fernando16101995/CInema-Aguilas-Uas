@@ -53,8 +53,11 @@
                         ¿Olvidaste tu contraseña?
                     </a>
                 @endif
-
+                <div style="margin-top: 1rem;">
+                                    <a href="{{ route('register') }}" class="register-link" style="color: #ffe600; text-decoration: underline; font-size: 1rem; font-weight: 500;">¿No tienes cuenta? Regístrate aquí</a>
+                                </div>
                 <button type="submit" class="register-btn">Comenzar ahora</button>
+                
             </form>
         </div>
     </main>
